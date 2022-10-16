@@ -131,8 +131,72 @@ print(S[0])
 
 import streamlit as st
 
+gradeA=0
+gradeB=0
+gradeC=1
+gradeD=0
+gradeE=0
+gradeF=0
+gradeG=0
+verification_status1=0
+verification_status2=1
+verification_status3=0
+home_ownership_mortage=0
+home_ownership_rent=0
+home_ownership_own=0
+home_ownership_other=1
+home_ownership_none=0
+purpose_car=0
+purpose_credit=0
+purpose_debt=0
+purpose_education=0
+purpose_home=1
+purpose_house=0
+purpose_major=0
+purpose_medical=0
+purpose_moving=0
+purpose_other=0
+purpose_energy=0
+purpose_business=0
+purpose_vacation=0
+purpose_wedding=0
+
 def main():
-   st.title("i am tired")
+
+
+   st.title("Encuesta de credito")
+   termino=st.radio("Escoja el termino",(36,60))
+   int_ratee=st.number_input('Ingrese el numero')
+   grado=st.radio("Escoja el grado",('A','B','C','D','E','F','G'))
+   emp_l=st.slider("Numero de años trabajando",0,10,1)
+   ingresos_anuales=st.number_input('Ingrese la cantidad de sus ingresos anuales (En dolares)')
+   dtii=st.number_input("meta su dti ?")
+   casa=st.radio("Cual es su estado de posesion de vivienda",('Hipoteca','No posee','Otro','Casa propia','Arrendado'))
+   ver_sta=st.radio("ss",('No verificado','Fuente verificada','Verificado'))
+   proposito=st.radio("Proposito del credito ",
+                      ('Carro','Tarjeta de credito','Consolidacion de la deuda','Educativo',
+                       'Mejora de la vivienda','Casa','Compra grande',
+                       'Motivos medicos','Mudanza','Otro','Energia renovable',
+                       'Pequeño negocio','Vacaciones','Boda'))
+   inq_6meses = st.number_input("meta su dti1 ?")
+   revol = st.number_input("meta su dti2 ?")
+   totalacc = st.number_input("meta su dti3 ?")
+   out_pri = st.number_input("meta su dti4 ?")
+   pago_total = st.number_input("meta su dti 5?")
+   pago_reciente = st.number_input("meta su dti6 ?")
+   ultimo_pago = st.number_input("meta su dti7 ?")
+   total_cur = st.number_input("meta su dt8i ?")
+   total_rev_lims=st.number_input("ss")
+   meses_cr = st.number_input("meta su dti9 ?")
+   meses_issue = st.number_input("meta su dti p?")
+   meses_ultimo_pago = st.number_input("meta su dtia ?")
+   meses_ultimo_credito = st.number_input("meta su dsti ?")
+
+   S = B.predict(dfxxx)
+   st.title(str(S[0]))
+
+
+
 
 if __name__=="__main__":
    main()
