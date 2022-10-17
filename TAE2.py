@@ -79,16 +79,16 @@ def main():
 
    st.title("Calcular tarjeta de puntuación")
    termino=st.radio("Escoja el termino",(36,60))
-   int_ratee=st.number_input('Ingrese la tasa de interes del préstamo')
-   grado=st.radio("Escoja el grado",('A','B','C','D','E','F','G'))
-   emp_l=st.slider("Número de años trabajando",0,10,1)
+   int_ratee=st.number_input('Ingrese la tasa de interés del préstamo')
+   grado=st.radio("Escoja un grado",('A','B','C','D','E','F','G'))
+   emp_l=st.slider("Ingrese el número de años trabajando",0,10,1)
    ingresos_anuales=st.number_input('Ingrese la cantidad de sus ingresos anuales (En dolares)')
-   casa=st.radio("Cual es su estado de posesion de vivienda",('Hipoteca','No posee','Otro','Casa propia','Arrendado'))
+   casa=st.radio("Cual es su estado de posesión de vivienda",('Hipoteca','No posee','Otro','Casa propia','Arrendado'))
    ver_sta=st.radio("ss",('No verificado','Fuente verificada','Verificado'))
    proposito=st.radio("Proposito del credito ",
-                      ('Carro','Tarjeta de credito','Consolidacion de la deuda','Educativo',
+                      ('Carro','Tarjeta de crédito','Consolidación de la deuda','Educativo',
                        'Mejora de la vivienda','Casa','Compra grande',
-                       'Motivos medicos','Mudanza','Otro','Energia renovable',
+                       'Motivos médicos','Mudanza','Otro','Energía renovable',
                        'Pequeño negocio','Vacaciones','Boda'))
 
    dtii = st.number_input("Ingrese su dti (Una relación calculada utilizando los pagos de deuda mensuales totales del prestatario sobre las obligaciones de deuda total, excluyendo la hipoteca y el préstamo LC solicitado, dividido por los ingresos mensuales autoinformados del prestatario.)")
