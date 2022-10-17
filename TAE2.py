@@ -193,20 +193,20 @@ def main():
                        'Motivos medicos','Mudanza','Otro','Energia renovable',
                        'Pequeño negocio','Vacaciones','Boda'))
 
-   dtii = st.number_input("ingrese su dti ()")
-   inq_6meses = st.number_input("meta su dti1 ?")
+   dtii = st.number_input("Ingrese su dti (Una relación calculada utilizando los pagos de deuda mensuales totales del prestatario sobre las obligaciones de deuda total, excluyendo la hipoteca y el préstamo LC solicitado, dividido por los ingresos mensuales autoinformados del prestatario.)")
+   inq_6meses = st.number_input("Ingrese el número de consultas en los últimos 6 meses (excluyendo consultas de automóviles e hipotecas")
    revol = st.number_input("Cantidad del credito que el prestatartio esta utilizando en relacion con todo el credito giratorio disponible")
-   totalacc = st.number_input("meta su dti3 ?")
-   out_pri = st.number_input("meta su dti4 ?")
+   totalacc = st.number_input("Ingrese el número total de líneas de crédito actualmente en el archivo de crédito del prestatario")
+   out_pri = st.number_input("Capital restante pendiente por el monto total financiado")
    pago_total = st.number_input("Ingrese el total de  pagos hasta la fecha")
    pago_reciente = st.number_input("Ingrese el total los intereses hasta la fecha")
-   ultimo_pago = st.number_input("meta su dti7 ?")
-   total_cur = st.number_input("meta su dt8i ? total_cur")
-   total_rev_lims = st.number_input("ss")
-   meses_cr = st.number_input("meta su dti9 ?")
-   meses_issue = st.number_input("meta su dti p?")
-   meses_ultimo_pago = st.number_input("Hace cuantos meses efectuo su pago")
-   meses_ultimo_credito = st.number_input("meta su dsti ?")
+   ultimo_pago = st.number_input("Ingrese el último monto total de pago recibido")
+   total_cur = st.number_input("Ingrese su saldo actual total de todas las cuentas")
+   total_rev_lims = st.number_input("Límite total de crédito/crédito de alto aumento giratorio")
+   meses_cr = st.number_input("Numero de meses desde que se abrió la línea de crédito más temprana del prestatario")
+   meses_issue = st.number_input("Numero de meses desde que el prestamo fue hecho")
+   meses_ultimo_pago = st.number_input("Numero de  meses desde efectuo su ultimo pago?")
+   meses_ultimo_credito = st.number_input("Numero de meses desde que LC obtuvo crédito por este préstamo")
 
    if grado=='A':
       gradeA=1
@@ -222,6 +222,7 @@ def main():
       gradeF=1
    elif grado=='G':
       gradeG=1
+
 
    if ver_sta=='No verificado':
       verification_status1=1
@@ -321,7 +322,7 @@ def main():
                        'grade:D': gradeD,
                        'grade:E': gradeE,
                        'grade:F': gradeF,
-                       'grade:G': gradeF,
+                       'grade:G': gradeG,
                        'home_ownership:MORTGAGE': home_ownership_mortage,
                        'home_ownership:NONE': home_ownership_none,
                        'home_ownership:OTHER': home_ownership_other,
@@ -356,8 +357,14 @@ def main():
 
    scorecard_scores = scorecard_scores.values.reshape(102, 1)
    y_scores = X_test_woe_transformed.dot(scorecard_scores)
-   st.title("Su puntaje es :" + str(y_scores[0][0]))
-   st.title("El puntaje promedio de los usuarios es de ")
+   st.sidebar.title("Su puntaje es : " + str(y_scores[0][0]))
+   puntaje_promedio=549.40798
+   st.sidebar.title("El puntaje promedio de los usuarios es de "+str(puntaje_promedio))
+   if y_scores[0][0]>=puntaje_promedio:
+       st.sidebar.title("Su puntaje es superior o igual a la media")
+   else:
+       st.sidebar.title("Su puntaje es inferior a la media")
+
 
 
 
