@@ -26,9 +26,20 @@ def load_modelB():
 
 B = load_modelB()
 
-with lzma.open('df_scorecard.pkl', 'rb') as file:
-    A = pickle.load(file)
 
+def load_modelA():
+    with lzma.open('df_scorecard.pkl', 'rb') as file:
+        A = pickle.load(file)
+        return A
+
+
+A = load_modelA()
+
+@st.cache
+def load_modelC():
+    with lzma.open('woe_transform.pkl', 'rb') as file:
+        C = pickle.load(file)
+        return C
 
 def main():
    gradeA = 0
@@ -234,11 +245,9 @@ def main():
    dataframe_predecir = pd.DataFrame(data_predictiva)
 
 
-   @st.cache
-   def load_modelC():
-       with lzma.open('woe_transform.pkl', 'rb') as file:
-           C = pickle.load(file)
-           return C
+
+
+
 
    C = load_modelC()
 
