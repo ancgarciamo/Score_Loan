@@ -84,7 +84,7 @@ def main():
    emp_l=st.slider("Ingrese el número de años trabajando",0,10,1)
    ingresos_anuales=st.number_input('Ingrese la cantidad de sus ingresos anuales (En dolares)')
    casa=st.radio("Cual es su estado de posesión de vivienda",('Hipoteca','No posee','Otro','Casa propia','Arrendado'))
-   ver_sta=st.radio("ss",('No verificado','Fuente verificada','Verificado'))
+   ver_sta=st.radio("Indica si el ingreso conjunto de los prestatarios fue verificado por LC, no verificado o si se verificó la fuente de ingresos",('No verificado','Fuente verificada','Verificado'))
    proposito=st.radio("Proposito del credito ",
                       ('Carro','Tarjeta de crédito','Consolidación de la deuda','Educativo',
                        'Mejora de la vivienda','Casa','Compra grande',
