@@ -18,23 +18,12 @@ ref_categories = ['mths_since_last_credit_pull_d:>75', 'mths_since_issue_d:>122'
                   'annual_inc:>150K', 'int_rate:>20.281', 'term:60', 'purpose:major_purch__car__home_impr', 'verification_status:Not Verified',
                   'home_ownership:MORTGAGE', 'grade:G']
 
-@st.cache
-def load_modelB():
-    with lzma.open('prediccion_compressed.pkl', 'rb') as file:
-        B = pickle.load(file)
-        return B
-
-B = load_modelB()
 
 
-def load_modelA():
-    with lzma.open('df_scorecard.pkl', 'rb') as file:
-        A = pickle.load(file)
-        return A
 
 
-A = load_modelA()
-
+with lzma.open('df_scorecard.pkl', 'rb') as file:
+    A = pickle.load(file)
 
 with lzma.open('woe_transform.pkl', 'rb') as file:
     C = pickle.load(file)
