@@ -97,7 +97,7 @@ def main():
    totalacc = st.number_input("Ingrese el número total de líneas de crédito actualmente en el archivo de crédito del prestatario")
    out_pri = st.number_input("Capital restante pendiente por el monto total financiado")
    pago_total = st.number_input("Ingrese el total de  pagos hasta la fecha")
-   pago_reciente = st.number_input("Ingrese el total los intereses hasta la fecha")
+   pago_reciente = st.number_input("Ingrese el total de los intereses hasta la fecha")
    ultimo_pago = st.number_input("Ingrese el último monto total de pago recibido")
    total_cur = st.number_input("Ingrese su saldo actual total de todas las cuentas")
    total_rev_lims = st.number_input("Límite total de crédito/crédito de alto aumento giratorio")
