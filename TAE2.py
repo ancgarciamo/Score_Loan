@@ -18,19 +18,93 @@ ref_categories = ['mths_since_last_credit_pull_d:>75', 'mths_since_issue_d:>122'
                   'annual_inc:>150K', 'int_rate:>20.281', 'term:60', 'purpose:major_purch__car__home_impr', 'verification_status:Not Verified',
                   'home_ownership:MORTGAGE', 'grade:G']
 
+@st.cache
+def load_modelB():
+    with lzma.open('prediccion_compressed.pkl', 'rb') as file:
+        B = pickle.load(file)
+        return B
 
-with lzma.open('prediccion_compressed.pkl', 'rb') as file:
-    B = pickle.load(file)
-
-with lzma.open('df_scorecard.pkl', 'rb') as file:
-    A = pickle.load(file)
-
-
-with lzma.open('woe_transform.pkl', 'rb') as file:
-    C = pickle.load(file)
+B = load_modelB()
 
 
+@st.cache
+def load_modelA():
+    with lzma.open('df_scorecard.pkl', 'rb') as file:
+        A = pickle.load(file)
+        return A
+A = load_modelA()
 
+@st.cache
+def load_modelC():
+    with lzma.open('woe_transform.pkl', 'rb') as file:
+        C = pickle.load(file)
+        return C
+
+C = load_modelC()
+
+data2=[{'term':36,
+   'int_rate':7.12,
+   'grade':'A',
+   'emp_length':1.0,
+   'home_ownership' :'RENT',
+   'annual_inc':63000.0,
+   'verification_status':'Not Verified',
+   'purpose':'debt_consolidation',
+   'dti':7.98,
+   'inq_last_6mths':0.0,
+   'revol_util':7.1,
+   'total_acc':24.0,
+   'out_prncp':2992.57,
+   'total_pymnt':3526.4,
+   'total_rec_int':518.97,
+   'last_pymnt_amnt':185.6,
+   'tot_cur_bal':4413.0,
+   'total_rev_hi_lim':27000.0,
+   'mths_since_earliest_cr_line':265.0,
+   'mths_since_issue_d':74.0,
+   'mths_since_last_pymnt_d':55.0,
+   'mths_since_last_credit_pull_d':55.0,
+   'grade:A':1,
+   'grade:B':0,
+   'grade:C':0,
+   'grade:D':0,
+   'grade:E':0,
+   'grade:F':0,
+   'grade:G':0,
+   'home_ownership:MORTGAGE':0,
+   'home_ownership:NONE':0,
+   'home_ownership:OTHER':0,
+    'home_ownership:OWN':0,
+   'home_ownership:RENT':1,
+   'verification_status:Not Verified':1,
+   'verification_status:Source Verified':0,
+   'verification_status:Verified':0,
+   'purpose:car':0,
+   'purpose:credit_card':0,
+   'purpose:debt_consolidation':1,
+   'purpose:educational':0,
+   'purpose:home_improvement':0,
+   'purpose:house':0,
+   'purpose:major_purchase':0,
+   'purpose:medical':0,
+   'purpose:moving':0,
+   'purpose:other':0,
+   'purpose:renewable_energy':0,
+   'purpose:small_business':0,
+   'purpose:vacation':0,
+   'purpose:wedding':0
+}]
+
+dfxxx = pd.DataFrame(data2)
+X_test_woe_transformed = C.fit_transform(dfxxx)
+X_test_woe_transformed.insert(0, 'Intercept', 1)
+scorecard_scores = A['Score - Final']
+X_test_woe_transformed = pd.concat([X_test_woe_transformed, pd.DataFrame(dict.fromkeys(ref_categories, [0] * len(X_test_woe_transformed)),
+                                                                         index = X_test_woe_transformed.index)], axis = 1)
+# Need to reshape scorecard_scores so that it is (102,1) to allow for matrix dot multiplication
+scorecard_scores = scorecard_scores.values.reshape(102, 1)
+y_scores = X_test_woe_transformed.dot(scorecard_scores)
+print("Su puntaje es :" + str(y_scores[0][0]))
 def main():
    gradeA = 0
    gradeB = 0
