@@ -172,7 +172,7 @@ def main():
    elif proposito == 'Compra grande':
       purpose_major = 1
       purpose_info = 'major_purchase'
-   elif proposito == 'Motivos medicos':
+   elif proposito == 'Motivos médicos':
       purpose_medical = 1
       purpose_info = 'medical'
    elif proposito == 'Mudanza':
