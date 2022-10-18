@@ -35,11 +35,12 @@ def load_modelA():
 
 A = load_modelA()
 
-@st.cache
-def load_modelC():
-    with lzma.open('woe_transform.pkl', 'rb') as file:
-        C = pickle.load(file)
-        return C
+
+with lzma.open('woe_transform.pkl', 'rb') as file:
+    C = pickle.load(file)
+
+
+
 
 def main():
    gradeA = 0
@@ -249,7 +250,7 @@ def main():
 
 
 
-   C = load_modelC()
+
 
    X_test_woe_transformed = C.fit_transform(dataframe_predecir)
    X_test_woe_transformed.insert(0, 'Intercept', 1)
