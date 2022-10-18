@@ -18,16 +18,30 @@ ref_categories = ['mths_since_last_credit_pull_d:>75', 'mths_since_issue_d:>122'
                   'annual_inc:>150K', 'int_rate:>20.281', 'term:60', 'purpose:major_purch__car__home_impr', 'verification_status:Not Verified',
                   'home_ownership:MORTGAGE', 'grade:G']
 
+@st.cache
+def load_modelB():
+    with lzma.open('prediccion_compressed.pkl', 'rb') as file:
+        B = pickle.load(file)
+        return B
+
+B = load_modelB()
+
+@st.cache
+def load_modelA():
+    with lzma.open('df_scorecard.pkl', 'rb') as file:
+        A = pickle.load(file)
+        return A
 
 
+A = load_modelA()
 
+@st.cache
+def load_modelC():
+    with lzma.open('woe_transform.pkl', 'rb') as file:
+        C = pickle.load(file)
+        return C
 
-with lzma.open('df_scorecard.pkl', 'rb') as file:
-    A = pickle.load(file)
-
-with lzma.open('woe_transform.pkl', 'rb') as file:
-    C = pickle.load(file)
-
+C = load_modelC()
 
 
 
@@ -67,32 +81,32 @@ def main():
 
    st.title("Calcular tarjeta de puntuación")
    termino=st.radio("Escoja el termino",(36,60))
-   int_ratee=st.number_input('Ingrese la tasa de interés del préstamo')
+   int_ratee=st.number_input('Ingrese la tasa de interés del préstamo',value=7.12)
    grado=st.radio("Escoja un grado",('A','B','C','D','E','F','G'))
    emp_l=st.slider("Ingrese el número de años trabajando",0,10,1)
-   ingresos_anuales=st.number_input('Ingrese la cantidad de sus ingresos anuales (En dolares)')
-   casa=st.radio("Cual es su estado de posesión de vivienda",('Hipoteca','No posee','Otro','Casa propia','Arrendado'))
+   ingresos_anuales=st.number_input('Ingrese la cantidad de sus ingresos anuales (En dolares)',value=63000.0)
+   casa=st.radio("Cual es su estado de posesión de vivienda",('Hipoteca','No posee','Otro','Casa propia','Arrendado'),index=4)
    ver_sta=st.radio("Indica si el ingreso conjunto de los prestatarios fue verificado por LC, no verificado o si se verificó la fuente de ingresos",('No verificado','Fuente verificada','Verificado'))
    proposito=st.radio("Proposito del credito ",
                       ('Carro','Tarjeta de crédito','Consolidación de la deuda','Educativo',
                        'Mejora de la vivienda','Casa','Compra grande',
                        'Motivos médicos','Mudanza','Otro','Energía renovable',
-                       'Pequeño negocio','Vacaciones','Boda'))
+                       'Pequeño negocio','Vacaciones','Boda'),index=2)
 
-   dtii = st.number_input("Ingrese su dti (Una relación calculada utilizando los pagos de deuda mensuales totales del prestatario sobre las obligaciones de deuda total, excluyendo la hipoteca y el préstamo LC solicitado, dividido por los ingresos mensuales autoinformados del prestatario.)")
-   inq_6meses = st.number_input("Ingrese el número de consultas en los últimos 6 meses (excluyendo consultas de automóviles e hipotecas")
-   revol = st.number_input("Cantidad del crédito que el prestatario está utilizando en relación con todo el crédito giratorio disponible")
-   totalacc = st.number_input("Ingrese el número total de líneas de crédito actualmente en el archivo de crédito del prestatario")
-   out_pri = st.number_input("Capital restante pendiente por el monto total financiado")
-   pago_total = st.number_input("Ingrese el total de  pagos hasta la fecha")
-   pago_reciente = st.number_input("Ingrese el total de los intereses hasta la fecha")
-   ultimo_pago = st.number_input("Ingrese el último monto total de pago recibido")
-   total_cur = st.number_input("Ingrese su saldo actual total de todas las cuentas")
-   total_rev_lims = st.number_input("Límite total de crédito/crédito de alto aumento giratorio")
-   meses_cr = st.number_input("Número de meses desde que se abrió la línea de crédito más temprana del prestatario")
-   meses_issue = st.number_input("Número de meses desde que el préstamo fue hecho")
-   meses_ultimo_pago = st.number_input("Número de  meses desde efectuo su ultimo pago?")
-   meses_ultimo_credito = st.number_input("Número de meses desde que LC obtuvo crédito por este préstamo")
+   dtii = st.number_input("Ingrese su dti (Una relación calculada utilizando los pagos de deuda mensuales totales del prestatario sobre las obligaciones de deuda total, excluyendo la hipoteca y el préstamo LC solicitado, dividido por los ingresos mensuales autoinformados del prestatario.)",value=7.98)
+   inq_6meses = st.number_input("Ingrese el número de consultas en los últimos 6 meses (excluyendo consultas de automóviles e hipotecas",value=0)
+   revol = st.number_input("Cantidad del crédito que el prestatario está utilizando en relación con todo el crédito giratorio disponible",value=7.1)
+   totalacc = st.number_input("Ingrese el número total de líneas de crédito actualmente en el archivo de crédito del prestatario",value=24.0)
+   out_pri = st.number_input("Capital restante pendiente por el monto total financiado",value=2992.57)
+   pago_total = st.number_input("Ingrese el total de  pagos hasta la fecha",value=3526.4)
+   pago_reciente = st.number_input("Ingrese el total de los intereses hasta la fecha",value=518.97)
+   ultimo_pago = st.number_input("Ingrese el último monto total de pago recibido",value=185.6)
+   total_cur = st.number_input("Ingrese su saldo actual total de todas las cuentas",value=4413.0)
+   total_rev_lims = st.number_input("Límite total de crédito/crédito de alto aumento giratorio",value=27000)
+   meses_cr = st.number_input("Número de meses desde que se abrió la línea de crédito más temprana del prestatario",value=265)
+   meses_issue = st.number_input("Número de meses desde que el préstamo fue hecho",value=74)
+   meses_ultimo_pago = st.number_input("Número de  meses desde efectuo su ultimo pago?",value=55)
+   meses_ultimo_credito = st.number_input("Número de meses desde que LC obtuvo crédito por este préstamo",value=55)
 
    if grado=='A':
       gradeA=1
@@ -117,7 +131,7 @@ def main():
       verification_status2=1
       verification_status_info = 'Source Verified'
    elif ver_sta=='Verificado':
-      verification_status2=1
+      verification_status3=1
       verification_status_info = 'Verified'
 
    if casa=='Hipoteca':
@@ -216,7 +230,7 @@ def main():
                        'home_ownership:RENT': home_ownership_rent,
                        'verification_status:Not Verified': verification_status1,
                        'verification_status:Source Verified': verification_status2,
-                       'verification_status:Verified': verification_status2,
+                       'verification_status:Verified': verification_status3,
                        'purpose:car': purpose_car,
                        'purpose:credit_card': purpose_credit,
                        'purpose:debt_consolidation': purpose_debt,
@@ -233,14 +247,6 @@ def main():
                        'purpose:wedding': purpose_wedding
                        }]
    dataframe_predecir = pd.DataFrame(data_predictiva)
-
-
-
-
-
-
-
-
    X_test_woe_transformed = C.fit_transform(dataframe_predecir)
    X_test_woe_transformed.insert(0, 'Intercept', 1)
    scorecard_scores = A['Score - Final']
