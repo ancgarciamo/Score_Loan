@@ -17,15 +17,14 @@ ref_categories = ['mths_since_last_credit_pull_d:>75', 'mths_since_issue_d:>122'
                   'total_rec_int:>7,260', 'total_pymnt:>25,000', 'out_prncp:>15,437', 'revol_util:>1.0', 'inq_last_6mths:>4', 'dti:>35.191',
                   'annual_inc:>150K', 'int_rate:>20.281', 'term:60', 'purpose:major_purch__car__home_impr', 'verification_status:Not Verified',
                   'home_ownership:MORTGAGE', 'grade:G']
-
 @st.cache
 def load_modelB():
     with lzma.open('prediccion_compressed.pkl', 'rb') as file:
         B = pickle.load(file)
         return B
 
-B = load_modelB()
 
+B=load_modelB()
 
 @st.cache
 def load_modelA():
@@ -43,6 +42,7 @@ def load_modelC():
 C = load_modelC()
 
 
+
 def main():
    gradeA = 0
    gradeB = 0
@@ -51,6 +51,31 @@ def main():
    gradeE = 0
    gradeF = 0
    gradeG = 0
+
+   @st.cache
+   def load_modelB():
+       with lzma.open('prediccion_compressed.pkl', 'rb') as file:
+           B = pickle.load(file)
+           return B
+
+   B = load_modelB()
+
+   @st.cache
+   def load_modelA():
+       with lzma.open('df_scorecard.pkl', 'rb') as file:
+           A = pickle.load(file)
+           return A
+
+   A = load_modelA()
+
+   @st.cache
+   def load_modelC():
+       with lzma.open('woe_transform.pkl', 'rb') as file:
+           C = pickle.load(file)
+           return C
+
+   C = load_modelC()
+
    verification_status_info="placeholder"
    verification_status1 = 0
    verification_status2 = 0
