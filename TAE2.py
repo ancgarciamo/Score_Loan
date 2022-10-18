@@ -26,6 +26,8 @@ def load_modelB():
 
 B = load_modelB()
 
+with lzma.open('df_scorecard.pkl', 'rb') as file:
+    A = pickle.load(file)
 
 
 def main():
@@ -231,13 +233,6 @@ def main():
                        }]
    dataframe_predecir = pd.DataFrame(data_predictiva)
 
-   @st.cache
-   def load_modelA():
-       with lzma.open('df_scorecard.pkl', 'rb') as file:
-           A = pickle.load(file)
-           return A
-
-   A = load_modelA()
 
    @st.cache
    def load_modelC():
