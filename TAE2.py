@@ -154,10 +154,10 @@ def main():
    if proposito=='Carro':
       purpose_info='car'
       purpose_car=1
-   elif proposito=='Tarjeta de credito':
+   elif proposito=='Tarjeta de crédito':
       purpose_credit=1
       purpose_info='credit_card'
-   elif proposito == 'Consolidacion de la deuda':
+   elif proposito == 'Consolidación de la deuda':
       purpose_debt = 1
       purpose_info = 'debt_consolidation'
    elif proposito == 'Educativo':
@@ -181,7 +181,7 @@ def main():
    elif proposito == 'Otro':
       purpose_other = 1
       purpose_info = 'other'
-   elif proposito == 'Energia renovable':
+   elif proposito == 'Energía renovable':
       purpose_energy = 1
       purpose_info = 'renewable_energy'
    elif proposito == 'Pequeño negocio':
@@ -263,6 +263,7 @@ def main():
        st.sidebar.title("Su puntaje es superior o igual a la media")
    else:
        st.sidebar.title("Su puntaje es inferior a la media")
+
 
 if __name__=="__main__":
    main()
