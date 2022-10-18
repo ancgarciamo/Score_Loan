@@ -24,14 +24,14 @@ def load_modelB():
         return B
 
 
-B=load_modelB()
+
 
 @st.cache
 def load_modelA():
     with lzma.open('df_scorecard.pkl', 'rb') as file:
         A = pickle.load(file)
         return A
-A = load_modelA()
+
 
 @st.cache
 def load_modelC():
@@ -39,7 +39,7 @@ def load_modelC():
         C = pickle.load(file)
         return C
 
-C = load_modelC()
+
 
 
 
@@ -52,27 +52,13 @@ def main():
    gradeF = 0
    gradeG = 0
 
-   @st.cache
-   def load_modelB():
-       with lzma.open('prediccion_compressed.pkl', 'rb') as file:
-           B = pickle.load(file)
-           return B
+
 
    B = load_modelB()
 
-   @st.cache
-   def load_modelA():
-       with lzma.open('df_scorecard.pkl', 'rb') as file:
-           A = pickle.load(file)
-           return A
 
    A = load_modelA()
 
-   @st.cache
-   def load_modelC():
-       with lzma.open('woe_transform.pkl', 'rb') as file:
-           C = pickle.load(file)
-           return C
 
    C = load_modelC()
 
